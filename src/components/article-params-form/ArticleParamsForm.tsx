@@ -39,18 +39,11 @@ export const ArticleParamsForm = ({
 	);
 	const [contentWidth, setContentWidth] = useState(articleParams.contentWidth);
 
-	useOutsideClickClose({
-		isOpen: isActive,
-		rootRef: asideRef,
-		onChange: setIsActive,
-	});
-
 	const handleClickOpen = () => {
 		setIsActive(!isActive);
 	};
 
 	const handleFormApply = (event: FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
 		const newArticleParams = {
 			fontFamilyOption: fontFamily,
 			fontSizeOption: fontSize,
@@ -58,6 +51,7 @@ export const ArticleParamsForm = ({
 			backgroundColor: backgroundColor,
 			contentWidth: contentWidth,
 		};
+		event.preventDefault();
 		setArticleParams(newArticleParams);
 	};
 
@@ -70,11 +64,18 @@ export const ArticleParamsForm = ({
 		setArticleParams(defaultArticleState);
 	};
 
+	useOutsideClickClose({
+		isOpen: isActive,
+		rootRef: asideRef,
+		onChange: setIsActive,
+	});
+
 	return (
-		<div ref={asideRef}>
+		<>
 			<ArrowButton containerOpen={isActive} onClick={handleClickOpen} />
 			<aside
-				className={clsx(styles.container, isActive && styles.container_open)}>
+				className={clsx(styles.container, isActive && styles.container_open)}
+				ref={asideRef}>
 				<form
 					className={styles.form}
 					onSubmit={handleFormApply}
@@ -120,6 +121,6 @@ export const ArticleParamsForm = ({
 					</div>
 				</form>
 			</aside>
-		</div>
+		</>
 	);
 };

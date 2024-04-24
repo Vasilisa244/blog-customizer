@@ -7,17 +7,17 @@ export type OnClick = () => void;
 
 interface ArrowButtonProps {
 	containerOpen: boolean;
-	onClick: () => void;
+	onClick: OnClick;
 }
 
 export const ArrowButton = ({ containerOpen, onClick }: ArrowButtonProps) => {
 	return (
 		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
 		<div
-			onClick={onClick}
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
+			onClick={onClick}
 			className={clsx(
 				styles.container,
 				containerOpen && styles.container_open
